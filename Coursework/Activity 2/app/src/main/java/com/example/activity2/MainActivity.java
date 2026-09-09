@@ -13,8 +13,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // 1. Botón para abrir la segunda Activity enviando información
         Button secondActivityBTN = findViewById(R.id.secondActivityBTN);
         secondActivityBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 2. Botón para abrir el navegador web externo
+
         Button googleBtn = findViewById(R.id.googleBtn);
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override

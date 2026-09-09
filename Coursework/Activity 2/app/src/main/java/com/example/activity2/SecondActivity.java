@@ -11,7 +11,7 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        // Si el Intent trae el mensaje, lo extraemos y lo ponemos en el TextView
+
         if (getIntent().hasExtra("SOMETHING")) {
             TextView tv = findViewById(R.id.textView);
             String text = getIntent().getExtras().getString("SOMETHING");
