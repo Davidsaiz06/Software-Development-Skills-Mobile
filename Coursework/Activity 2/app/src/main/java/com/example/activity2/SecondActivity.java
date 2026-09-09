@@ -1,0 +1,21 @@
+package com.example.activity2; // Revisa que este sea tu package correcto
+
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SecondActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        // Si el Intent trae el mensaje, lo extraemos y lo ponemos en el TextView
+        if (getIntent().hasExtra("SOMETHING")) {
+            TextView tv = findViewById(R.id.textView);
+            String text = getIntent().getExtras().getString("SOMETHING");
+            tv.setText(text);
+        }
+    }
+}
