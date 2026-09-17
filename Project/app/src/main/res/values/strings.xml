@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RefereeApp</string>
+    <string name="title_setup">Referee Match Setup</string>
+    <string name="subtitle_setup">Enter the competing team names to begin officiating.</string>
+    <string name="hint_home_team">Home Team Name</string>
+    <string name="hint_away_team">Away Team Name</string>
+    <string name="btn_start_match">Start Match</string>
+
+    <string name="title_live_match">Live Match Control</string>
+    <string name="label_home">Home</string>
+    <string name="label_away">Away</string>
+    <string name="label_goal">Goal</string>
+    <string name="hint_minute">Minute (Auto-fills if empty)</string>
+    <string name="hint_player_details">Player Name / Details (Optional)</string>
+    <string name="label_select_team_card">Target Team for Booking:</string>
+    <string name="btn_home_goal">+1 Home Goal</string>
+    <string name="btn_away_goal">+1 Away Goal</string>
+    <string name="btn_yellow_card">Yellow Card</string>
+    <string name="btn_red_card">Red Card</string>
+    <string name="btn_finish_match">Finish Match &amp; View Report</string>
+
+    <string name="btn_start_timer">Start Timer</string>
+    <string name="btn_pause_timer">Pause Timer</string>
+    <string name="btn_undo_last">Undo Last Incident</string>
+    <string name="msg_undo_success">Undid: %s</string>
+    <string name="msg_nothing_to_undo">No events to undo.</string>
+    <string name="stats_format">Goals: %1$d  |  Yellow Cards: %2$d  |  Red Cards: %3$d</string>
+
+    <string name="title_report">Final Match Report</string>
+    <string name="header_timeline">Match Incident Log</string>
+    <string name="empty_events">No incidents logged during this match.</string>
+    <string name="btn_new_match">Start New Match</string>
+
+    <string name="err_empty_teams">Please enter valid team names.</string>
+    <string name="err_invalid_minute">Enter valid match minute (0 - 130).</string>
+</resources>
