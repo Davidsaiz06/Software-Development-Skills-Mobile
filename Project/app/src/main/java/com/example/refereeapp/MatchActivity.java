@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ import java.util.Locale;
 
 /**
  * Live Match Control screen displaying scoreboard, live stopwatch timer,
- * incident logging quick action controls, and undo capability.
+ * incident logging quick action controls, instant feedback toasts,
+ * confirmation dialog on termination, and undo capability.
  */
 public class MatchActivity extends AppCompatActivity {
 
@@ -121,7 +123,7 @@ public class MatchActivity extends AppCompatActivity {
         btnYellowCard.setOnClickListener(v -> recordCard(MatchEvent.EventType.YELLOW_CARD));
         btnRedCard.setOnClickListener(v -> recordCard(MatchEvent.EventType.RED_CARD));
         btnUndoLast.setOnClickListener(v -> undoLastEvent());
-        btnFinishMatch.setOnClickListener(v -> finishMatch());
+        btnFinishMatch.setOnClickListener(v -> confirmFinishMatch());
     }
 
     private void setupListeners() {
@@ -134,10 +136,12 @@ public class MatchActivity extends AppCompatActivity {
             isTimerRunning = false;
             btnTimerToggle.setText(getString(R.string.btn_start_timer));
             timerHandler.removeCallbacks(timerRunnable);
+            Toast.makeText(this, "Match timer paused", Toast.LENGTH_SHORT).show();
         } else {
             isTimerRunning = true;
             btnTimerToggle.setText(getString(R.string.btn_pause_timer));
             timerHandler.post(timerRunnable);
+            Toast.makeText(this, "Match timer started", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -194,7 +198,7 @@ public class MatchActivity extends AppCompatActivity {
         }
 
         eventList.add(new MatchEvent(minute, desc, MatchEvent.EventType.GOAL));
-        Toast.makeText(this, desc + " (" + minute + "')", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Goal recorded: " + teamName, Toast.LENGTH_SHORT).show();
         clearInputFields();
     }
 
@@ -212,7 +216,13 @@ public class MatchActivity extends AppCompatActivity {
         }
 
         eventList.add(new MatchEvent(minute, desc, cardType));
-        Toast.makeText(this, desc + " (" + minute + "')", Toast.LENGTH_SHORT).show();
+
+        if (cardType == MatchEvent.EventType.YELLOW_CARD) {
+            Toast.makeText(this, "Yellow card logged", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Red card logged", Toast.LENGTH_SHORT).show();
+        }
+
         clearInputFields();
     }
 
@@ -249,7 +259,22 @@ public class MatchActivity extends AppCompatActivity {
         tvAwayScore.setText(String.valueOf(awayScore));
     }
 
-    private void finishMatch() {
+    /**
+     * Prompts the user with an AlertDialog before terminating the match.
+     */
+    private void confirmFinishMatch() {
+        new AlertDialog.Builder(this)
+                .setTitle("Finish Match")
+                .setMessage("Are you sure you want to end the match and view the final report?")
+                .setPositiveButton("Yes, Finish", (dialog, which) -> finishMatchAndNavigate())
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    /**
+     * Executes the Intent navigation to ReportActivity passing all match data.
+     */
+    private void finishMatchAndNavigate() {
         Intent intent = new Intent(MatchActivity.this, ReportActivity.class);
         intent.putExtra(EXTRA_HOME_TEAM, homeTeamName);
         intent.putExtra(EXTRA_AWAY_TEAM, awayTeamName);

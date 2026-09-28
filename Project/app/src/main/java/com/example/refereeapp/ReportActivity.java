@@ -47,7 +47,7 @@ public class ReportActivity extends AppCompatActivity {
             String headerText = homeTeam + "  " + homeScore + " - " + awayScore + "  " + awayTeam;
             tvFinalScoreHeader.setText(headerText);
 
-            @SuppressWarnings("unchecked")
+
             ArrayList<MatchEvent> eventList = (ArrayList<MatchEvent>) intent.getSerializableExtra(MatchActivity.EXTRA_EVENT_LIST);
 
             int totalGoals = 0;
