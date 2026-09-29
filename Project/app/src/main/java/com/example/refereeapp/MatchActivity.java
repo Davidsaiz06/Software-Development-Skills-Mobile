@@ -19,8 +19,8 @@ import java.util.Locale;
 
 /**
  * Live Match Control screen displaying scoreboard, live stopwatch timer,
- * incident logging quick action controls, instant feedback toasts,
- * confirmation dialog on termination, and undo capability.
+ * incident logging quick action controls with mandatory player validation,
+ * instant feedback toasts, confirmation dialog on termination, and undo capability.
  */
 public class MatchActivity extends AppCompatActivity {
 
@@ -183,6 +183,13 @@ public class MatchActivity extends AppCompatActivity {
         int minute = parseMinute();
         if (minute < 0) return;
 
+        String playerInfo = etPlayerDetails.getText().toString().trim();
+        if (TextUtils.isEmpty(playerInfo)) {
+            etPlayerDetails.setError("Player details (name or jersey number) are required");
+            etPlayerDetails.requestFocus();
+            return;
+        }
+
         String teamName = isHome ? homeTeamName : awayTeamName;
         if (isHome) {
             homeScore++;
@@ -191,11 +198,7 @@ public class MatchActivity extends AppCompatActivity {
         }
         updateScoreboard();
 
-        String playerInfo = etPlayerDetails.getText().toString().trim();
-        String desc = teamName + " - Goal";
-        if (!TextUtils.isEmpty(playerInfo)) {
-            desc += " (" + playerInfo + ")";
-        }
+        String desc = teamName + " - Goal (" + playerInfo + ")";
 
         eventList.add(new MatchEvent(minute, desc, MatchEvent.EventType.GOAL));
         Toast.makeText(this, "Goal recorded: " + teamName, Toast.LENGTH_SHORT).show();
@@ -206,14 +209,16 @@ public class MatchActivity extends AppCompatActivity {
         int minute = parseMinute();
         if (minute < 0) return;
 
-        String targetTeam = getSelectedTeam();
         String playerInfo = etPlayerDetails.getText().toString().trim();
-
-        String cardName = (cardType == MatchEvent.EventType.YELLOW_CARD) ? "Yellow Card" : "Red Card";
-        String desc = targetTeam + " - " + cardName;
-        if (!TextUtils.isEmpty(playerInfo)) {
-            desc += " (" + playerInfo + ")";
+        if (TextUtils.isEmpty(playerInfo)) {
+            etPlayerDetails.setError("Player details (name or jersey number) are required");
+            etPlayerDetails.requestFocus();
+            return;
         }
+
+        String targetTeam = getSelectedTeam();
+        String cardName = (cardType == MatchEvent.EventType.YELLOW_CARD) ? "Yellow Card" : "Red Card";
+        String desc = targetTeam + " - " + cardName + " (" + playerInfo + ")";
 
         eventList.add(new MatchEvent(minute, desc, cardType));
 

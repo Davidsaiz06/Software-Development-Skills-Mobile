@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,18 +20,31 @@ public class EventAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
 
     public EventAdapter(Context context, List<MatchEvent> eventList) {
-        this.eventList = eventList;
+        this.eventList = (eventList != null) ? new ArrayList<>(eventList) : new ArrayList<>();
         this.inflater = LayoutInflater.from(context);
+    }
+
+    /**
+     * Updates the internal dataset and refreshes the ListView.
+     *
+     * @param newList The new list of filtered match events.
+     */
+    public void updateList(List<MatchEvent> newList) {
+        this.eventList.clear();
+        if (newList != null) {
+            this.eventList.addAll(newList);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return eventList != null ? eventList.size() : 0;
+        return eventList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return eventList != null ? eventList.get(position) : null;
+        return (position >= 0 && position < eventList.size()) ? eventList.get(position) : null;
     }
 
     @Override
