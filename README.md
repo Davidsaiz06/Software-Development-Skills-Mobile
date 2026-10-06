@@ -7,7 +7,7 @@ Developed as the final project for the **Mobile Development (Software Developmen
 ---
 
 ## Video Demonstration
-* **Project Walkthrough Video:** [Link to Demo Video (e.g., YouTube / Google Drive)](https://youtube.com/shorts/Kokc5ra3B9Q?is=JynQ0qtngX1GLujK)  
+* **Project Walkthrough Video:** [Link to Demo Video (YouTube)](https://youtube.com/shorts/Kokc5ra3B9Q?is=JynQ0qtngX1GLujK)  
 *(A companion file `video_link.txt` with this direct URL is also provided in the repository).*
 
 ---
