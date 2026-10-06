@@ -17,11 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Locale;
 
-/**
- * Live Match Control screen displaying scoreboard, live stopwatch timer,
- * incident logging quick action controls with mandatory player validation,
- * instant feedback toasts, confirmation dialog on termination, and undo capability.
- */
 public class MatchActivity extends AppCompatActivity {
 
     public static final String EXTRA_HOME_TEAM = MainActivity.EXTRA_HOME_TEAM;
@@ -46,10 +41,6 @@ public class MatchActivity extends AppCompatActivity {
     private EditText etPlayerDetails;
     private RadioGroup rgTeamSelection;
 
-    private Button btnHomeGoal;
-    private Button btnAwayGoal;
-
-    // Live Stopwatch Timer members
     private int secondsElapsed = 0;
     private boolean isTimerRunning = false;
     private final Handler timerHandler = new Handler(Looper.getMainLooper());
@@ -82,7 +73,6 @@ public class MatchActivity extends AppCompatActivity {
         if (awayTeamName == null) awayTeamName = "Away Team";
 
         initViews();
-        setupListeners();
         updateScoreboard();
     }
 
@@ -104,8 +94,8 @@ public class MatchActivity extends AppCompatActivity {
         etPlayerDetails = findViewById(R.id.et_player_details);
         rgTeamSelection = findViewById(R.id.rg_team_selection);
 
-        btnHomeGoal = findViewById(R.id.btn_home_goal);
-        btnAwayGoal = findViewById(R.id.btn_away_goal);
+        Button btnHomeGoal = findViewById(R.id.btn_home_goal);
+        Button btnAwayGoal = findViewById(R.id.btn_away_goal);
         Button btnYellowCard = findViewById(R.id.btn_yellow_card);
         Button btnRedCard = findViewById(R.id.btn_red_card);
         Button btnUndoLast = findViewById(R.id.btn_undo_last);
@@ -119,16 +109,13 @@ public class MatchActivity extends AppCompatActivity {
         btnHomeGoal.setText(homeGoalBtnText);
         btnAwayGoal.setText(awayGoalBtnText);
 
+        btnHomeGoal.setOnClickListener(v -> recordGoal(true));
+        btnAwayGoal.setOnClickListener(v -> recordGoal(false));
         btnTimerToggle.setOnClickListener(v -> toggleTimer());
         btnYellowCard.setOnClickListener(v -> recordCard(MatchEvent.EventType.YELLOW_CARD));
         btnRedCard.setOnClickListener(v -> recordCard(MatchEvent.EventType.RED_CARD));
         btnUndoLast.setOnClickListener(v -> undoLastEvent());
         btnFinishMatch.setOnClickListener(v -> confirmFinishMatch());
-    }
-
-    private void setupListeners() {
-        btnHomeGoal.setOnClickListener(v -> recordGoal(true));
-        btnAwayGoal.setOnClickListener(v -> recordGoal(false));
     }
 
     private void toggleTimer() {
@@ -148,7 +135,6 @@ public class MatchActivity extends AppCompatActivity {
     private int parseMinute() {
         String minuteStr = etEventMinute.getText().toString().trim();
 
-        // If minute field is empty, automatically pre-fill using live timer!
         if (TextUtils.isEmpty(minuteStr)) {
             int currentMin = (secondsElapsed / 60) + 1;
             etEventMinute.setText(String.valueOf(currentMin));
@@ -264,9 +250,6 @@ public class MatchActivity extends AppCompatActivity {
         tvAwayScore.setText(String.valueOf(awayScore));
     }
 
-    /**
-     * Prompts the user with an AlertDialog before terminating the match.
-     */
     private void confirmFinishMatch() {
         new AlertDialog.Builder(this)
                 .setTitle("Finish Match")
@@ -276,9 +259,6 @@ public class MatchActivity extends AppCompatActivity {
                 .show();
     }
 
-    /**
-     * Executes the Intent navigation to ReportActivity passing all match data.
-     */
     private void finishMatchAndNavigate() {
         Intent intent = new Intent(MatchActivity.this, ReportActivity.class);
         intent.putExtra(EXTRA_HOME_TEAM, homeTeamName);

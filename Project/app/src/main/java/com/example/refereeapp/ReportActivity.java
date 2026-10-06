@@ -15,10 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Final Match Report Screen presenting the final match score,
- * summary statistics, event filter controls, and chronological event log.
- */
 public class ReportActivity extends AppCompatActivity {
 
     private enum FilterType { ALL, GOALS, CARDS }

@@ -12,7 +12,7 @@
     <string name="label_away">Away</string>
     <string name="label_goal">Goal</string>
     <string name="hint_minute">Minute (Auto-fills if empty)</string>
-    <string name="hint_player_details">Player Name / Details (Optional)</string>
+    <string name="hint_player_details">Player Name / Jersey # (Required)</string>
     <string name="label_select_team_card">Target Team for Booking:</string>
     <string name="btn_home_goal">+1 Home Goal</string>
     <string name="btn_away_goal">+1 Away Goal</string>

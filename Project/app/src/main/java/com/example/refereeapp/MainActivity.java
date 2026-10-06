@@ -8,9 +8,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * Setup Screen allowing the referee to enter home and away team names.
- */
 public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_HOME_TEAM = "com.example.refereeapp.EXTRA_HOME_TEAM";
@@ -18,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText etHomeTeam;
     private EditText etAwayTeam;
-    private Button btnStartMatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         etHomeTeam = findViewById(R.id.et_home_team);
         etAwayTeam = findViewById(R.id.et_away_team);
-        btnStartMatch = findViewById(R.id.btn_start_match);
+        Button btnStartMatch = findViewById(R.id.btn_start_match);
 
         btnStartMatch.setOnClickListener(v -> startMatch());
     }
